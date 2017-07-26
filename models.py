@@ -19,6 +19,8 @@ def load():
         term = cs[5]
         program = cs[6]
         department = cs[7]
+        # if "Applied" in courseName:
+        #     continue
         for i in range(classInWeek):
             g = Gene(len(genes), courseName, None, section, teacher, term, department, program)
             genes.append(g)

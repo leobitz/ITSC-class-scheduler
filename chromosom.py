@@ -35,7 +35,7 @@ class Chromosome:
                 for r in rooms.keys():
                     if cube[r, i, j] != -1:
                         k.append(genes[cube[r, i, j]].toStudentString())
-                fitness -= (len(k) - len(set(k)))
+                fitness -= 2 * (len(k) - len(set(k)))
         return fitness
 
     def mutate(self):
@@ -79,22 +79,22 @@ class Chromosome:
         flat = self.timetable.reshape((len(self.rooms), self.classesInDay, self.days))
         t = ""
         for k in self.rooms.keys():
-            h = "<h3>{0}</h3>".format(self.rooms[k])
-            r = "<table>"
+            h = "<h3 class='title'>{0}</h3>".format(self.rooms[k])
+            r = "<table class='table table-bordered'>"
             for i in range(flat.shape[1]):
-                s = "<tr style='outline: thin solid'>"
+                s = "<tr>"
                 for j in range(flat.shape[2]):
                     index = int(flat[k, i, j])
                     if index == -1:
-                        s += "<td>-----------</td>"
+                        s += "<td></td>"
                     else:
-                        s += "<td>" + self.genes[index].course + "</td>"
+                        s += "<td class='cell'>" + self.genes[index].course + "</td>"
                 r += s + "</tr>"
             r += "</table>"
             t += h + r
         temp = self.template()
         t = temp.replace("{{timetable}}", t)
-        file = open("room_schedule.html", mode="w")
+        file = open("result/room_schedule.html", mode="w")
         file.write(t)
         file.close()   
 
@@ -108,7 +108,7 @@ class Chromosome:
                     if geneId != -1:
                         gene = self.searchGene(geneId)
                         s = gene.toStudentString()
-                        if not tables.has_key(s):
+                        if s not in tables.keys():
                             tables[s] = -np.ones((self.classesInDay, self.days), dtype=np.int32)
                         if(tables[s][i, j] != -1):
                             print("Error ", i, j, gene.course, self.searchGene(abs(tables[s][i, j])).course)
@@ -139,7 +139,7 @@ class Chromosome:
 
         temp = self.template()
         t = temp.replace("{{timetable}}", t)
-        file = open("student_schedule.html", mode="w")
+        file = open("result/student_schedule.html", mode="w")
         file.write(t)
         file.close()   
 
@@ -152,8 +152,8 @@ class Chromosome:
                     geneId = int(flat[k, i, j])
                     if geneId != -1:
                         gene = self.searchGene(geneId)
-                        s = gene.toStudentString()
-                        if not tables.has_key(s):
+                        s = gene.teacher
+                        if s not in tables.keys():
                             tables[s] = -np.ones((self.classesInDay, self.days), dtype=np.int32)
                         if(tables[s][i, j] != -1):
                             print("Error ", i, j, gene.course, self.searchGene(abs(tables[s][i, j])).course)
@@ -175,7 +175,7 @@ class Chromosome:
                     elif geneId < -1:
                         td = "<td style='background: red'>{0}</td>".format(self.searchGene(-geneId).course)
                     else:
-                        td = "<td>{0}</td>".format(self.searchGene(geneId).teacher)
+                        td = "<td>{0}</td>".format(self.searchGene(geneId).course)
                     tr += td 
                 tr += '</tr>'
                 stable += tr
@@ -184,7 +184,7 @@ class Chromosome:
 
         temp = self.template()
         t = temp.replace("{{timetable}}", t)
-        file = open("teacher_schedule.html", mode="w")
+        file = open("result/teacher_schedule.html", mode="w")
         file.write(t)
         file.close()   
 
@@ -200,26 +200,21 @@ class Chromosome:
         return """
                 <html>
                 <head>
-                
+                    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+                    <script src="js/bootstrap.min..js"></script>
                 </head>
-
                 <body>
                 <style>
-                
-                    table{
-                        border-collapse: collapse;
+                    .title, table td{
+                        text-align: center;
                     }
-                    table, tr, td{
+                    table td{
+                        height: 100px;
+                        width: 20%;
                         padding: 10px;
-                        border: 1px solid black;
                     }
-                    td{
-                        width: 300px;
-                        hight: 100px;
-                    }
-                
                 </style>
-                    {{timetable}}
+                    <div class = 'container'>{{timetable}}</div>
                 </body>
 
                 </html>

@@ -64,9 +64,9 @@ class GA:
 
             self.chroms = newChroms
             self.mutate()
-        import pylab as pl
-        pl.scatter(range(len(x)), x)
-        pl.show()
+        # import pylab as pl
+        # pl.scatter(range(len(x)), x)
+        # pl.show()
         return best
 
     def bestFit(self):
@@ -75,7 +75,7 @@ class GA:
         return self.chroms[argsorted[-1]]
 
 ga = GA(40, genes, rooms, days, classesInDay)
-ga.selection(500, group=4, parentToChildRatio=.4)
-best = ga.bestFit()
+best = ga.selection(500, group=6, parentToChildRatio=.4)
 best.toRoomTimetableHtml()
 best.toStudentsTimetableHtml()
+best.toTeacherTimetableHtml()

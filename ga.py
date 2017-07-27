@@ -1,4 +1,3 @@
-#! /bin/bash
 
 from chromosom import Chromosome
 from models import *
@@ -74,8 +73,8 @@ class GA:
         argsorted = fitnesses.argsort()
         return self.chroms[argsorted[-1]]
 
-ga = GA(40, genes, rooms, days, classesInDay)
-best = ga.selection(500, group=6, parentToChildRatio=.4)
+ga = GA(30, genes, rooms, days, classesInDay)
+best = ga.selection(500, group=4, parentToChildRatio=.2)
 best.toRoomTimetableHtml()
 best.toStudentsTimetableHtml()
 best.toTeacherTimetableHtml()

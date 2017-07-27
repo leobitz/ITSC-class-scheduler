@@ -88,7 +88,7 @@ class Chromosome:
                     if index == -1:
                         s += "<td></td>"
                     else:
-                        s += "<td class='cell'>" + self.genes[index].course + "</td>"
+                        s += "<td>" + self.genes[index].course + "</td>"
                 r += s + "</tr>"
             r += "</table>"
             t += h + r
@@ -118,17 +118,17 @@ class Chromosome:
 
         t = ""
         for key in tables.keys():
-            h = "<h3>{0}</h3>".format(key)
+            h = "<h3 class='title'>{0}</h3>".format(key)
             table = tables[key].reshape((self.classesInDay, self.days))
-            stable = "<table>"
+            stable = "<table class='table table-bordered'>"
             for i in range(table.shape[0]):
-                tr = "<tr style='outline: thin solid'>"
+                tr = "<tr>"
                 for j in range(table.shape[1]):
                     geneId = table[i, j]
                     if geneId == -1:
                         td = "<td>-----------</td>"
                     elif geneId < -1:
-                        td = "<td style='background: red'>{0}</td>".format(self.searchGene(-geneId).course)
+                        td = "<td class='bg-danger'>{0}</td>".format(self.searchGene(-geneId).course)
                     else:
                         td = "<td>{0}</td>".format(self.searchGene(geneId).course)
                     tr += td 
@@ -163,17 +163,17 @@ class Chromosome:
 
         t = ""
         for key in tables.keys():
-            h = "<h3>{0}</h3>".format(key)
+            h = "<h3 class='title'>{0}</h3>".format(key)
             table = tables[key].reshape((self.classesInDay, self.days))
-            stable = "<table>"
+            stable = "<table class='table table-bordered'>"
             for i in range(table.shape[0]):
-                tr = "<tr style='outline: thin solid'>"
+                tr = "<tr>"
                 for j in range(table.shape[1]):
                     geneId = table[i, j]
                     if geneId == -1:
                         td = "<td>-----------</td>"
                     elif geneId < -1:
-                        td = "<td style='background: red'>{0}</td>".format(self.searchGene(-geneId).course)
+                        td = "<td class='bg-danger'>{0}</td>".format(self.searchGene(-geneId).course)
                     else:
                         td = "<td>{0}</td>".format(self.searchGene(geneId).course)
                     tr += td 

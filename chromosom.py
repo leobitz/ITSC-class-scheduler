@@ -1,8 +1,13 @@
 import numpy as np
 from copy import deepcopy
 from models import *
+from gene import *
 
 class Chromosome:
+
+    """
+        Represents a particular individual chromosome
+    """
 
     def __init__(self, genes, rooms, days, classesInDay):
         self.timetable = -np.ones((days* classesInDay * len(rooms),), dtype=np.int32)
@@ -39,7 +44,7 @@ class Chromosome:
         return fitness
 
     def mutate(self):
-        if np.random.random() < .5:
+        if np.random.random() < .1:
             i = 0
             j = 0
             while i == j:
@@ -68,7 +73,7 @@ class Chromosome:
         return newChrom
 
     def cross(self, table1, table2, i, j):
-        newTable = list(table1.tolist())
+        newTable = table1.tolist()
         temp = table2[i:j]
         for k in temp:
             newTable.remove(k)
@@ -88,7 +93,7 @@ class Chromosome:
                     if index == -1:
                         s += "<td></td>"
                     else:
-                        s += "<td>" + self.genes[index].course + "</td>"
+                        s += "<td><span class='course'>{0}</span><hr><span class='teacher'>{1}</span></td>".format(self.genes[index].course, self.genes[index].teacher)
                 r += s + "</tr>"
             r += "</table>"
             t += h + r
@@ -126,11 +131,11 @@ class Chromosome:
                 for j in range(table.shape[1]):
                     geneId = table[i, j]
                     if geneId == -1:
-                        td = "<td>-----------</td>"
+                        td = "<td></td>"
                     elif geneId < -1:
-                        td = "<td class='bg-danger'>{0}</td>".format(self.searchGene(-geneId).course)
+                        td = "<td class='bg-danger'><span class='course'>{0}</span><hr><span class='teacher'>{1}</span></td>".format(self.genes[-geneId].course, self.genes[-geneId].teacher)
                     else:
-                        td = "<td>{0}</td>".format(self.searchGene(geneId).course)
+                        td = "<td><span class='course'>{0}</span><hr><span class='teacher'>{1}</span></td>".format(self.genes[geneId].course, self.genes[geneId].teacher)
                     tr += td 
                 tr += '</tr>'
                 stable += tr
@@ -171,11 +176,11 @@ class Chromosome:
                 for j in range(table.shape[1]):
                     geneId = table[i, j]
                     if geneId == -1:
-                        td = "<td>-----------</td>"
+                        td = "<td></td>"
                     elif geneId < -1:
-                        td = "<td class='bg-danger'>{0}</td>".format(self.searchGene(-geneId).course)
+                        td = "<td class='bg-danger'><span class='course'>{0}</span><hr><span class='teacher'>{1}</span></td>".format(self.genes[-geneId].course, self.genes[-geneId].teacher)
                     else:
-                        td = "<td>{0}</td>".format(self.searchGene(geneId).course)
+                        td = "<td><span class='course'>{0}</span><hr><span class='teacher'>{1}</span></td>".format(self.genes[geneId].course, self.genes[geneId].teacher)
                     tr += td 
                 tr += '</tr>'
                 stable += tr
@@ -211,7 +216,22 @@ class Chromosome:
                     table td{
                         height: 100px;
                         width: 20%;
-                        padding: 10px;
+                        padding: 30 10 30 10 !important;
+                    }
+                    .teacher, .course{
+                        display: block;
+                    }
+                    .teacher{
+                        font-weight: bold;
+                        color: #0c4d58;
+                    }
+                    .course{
+                        color: #543709;
+                    }
+                    tr hr{
+                        color: #fefefe;
+                        padding-top: 5px;
+                        padding-bottom: 5px;
                     }
                 </style>
                     <div class = 'container'>{{timetable}}</div>

@@ -12,6 +12,8 @@ $ ./ga.py -i 500 -p 40 -c 0.8 -m 0.1
 - -c -> child ratio new population, from 1 to 0 range, default is 0.9
 - -g -> mating pool random parent candidates, default is 4
 
+The script uses the classes.csv file from last semester course offer as an exexample. go to the result folder and check out the schedule output of html files. schedule for rooms, for the teacher and for the students. 
+
 ## progress and future plan
 
 - [x] scheduling with 0 clashes

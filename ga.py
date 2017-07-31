@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from chromosom import Chromosome
+from chromosome import Chromosome
 from models import *
 from copy import deepcopy
 import numpy as np
@@ -65,9 +65,9 @@ class GA:
 
             self.chroms = newChroms
             self.mutate(mutationRate)
-        import pylab as pl
-        pl.scatter(range(len(x)), x)
-        pl.show()
+        # import pylab as pl
+        # pl.scatter(range(len(x)), x)
+        # pl.show()
         return best
 
     def bestFit(self):
@@ -78,11 +78,11 @@ class GA:
 def main(argv):
     usage = """ Usage
         -h -> Prints help
-        -i -> specifies number of iterations, defualt is 100
-        -p -> specifies size of population, defualt is 20
-        -m -> mutation rate,  from 0 to 1, range, defualt is 0.1
-        -c -> child ratio new population, from 1 to 0 range, defualt is 0.9
-        -g -> mating pool random parent candidates, defualt is 4
+        -i -> specifies number of iterations, default is 100
+        -p -> specifies size of population, default is 20
+        -m -> mutation rate,  from 0 to 1, range, default is 0.1
+        -c -> child ratio new population, from 1 to 0 range, default is 0.9
+        -g -> mating pool random parent candidates, default is 4
     """
     i, g, c, m, p = 100, 4, 0.9, 0.1, 20
     try:

@@ -1,5 +1,5 @@
 # content of test.py
-from chromosom import *
+from chromosome import *
 import numpy as np
 class TestClass(object):
 

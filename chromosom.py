@@ -6,7 +6,7 @@ from gene import *
 class Chromosome:
 
     """
-        Represents a particular individual chromosome
+        Represents a particular an individual's chromosome
     """
 
     def __init__(self, genes, rooms, days, classesInDay):
@@ -43,8 +43,8 @@ class Chromosome:
                 fitness -= 2 * (len(k) - len(set(k)))
         return fitness
 
-    def mutate(self):
-        if np.random.random() < .1:
+    def mutate(self, rate):
+        if np.random.random() < rate:
             i = 0
             j = 0
             while i == j:
@@ -62,8 +62,8 @@ class Chromosome:
         i = 0
         j = 0
         while i == j:
-            i = np.random.randint(0,self.timetable.shape[0])
-            j = np.random.randint(0,self.timetable.shape[0])
+            i = np.random.randint(0,self.timetable.shape[0] + 1)
+            j = np.random.randint(0,self.timetable.shape[0] + 1)
         if i > j:
             j, i = i, j
 
@@ -213,6 +213,9 @@ class Chromosome:
                     .title, table td{
                         text-align: center;
                     }
+                    .title{
+                        font-size: 24px;
+                    }
                     table td{
                         height: 100px;
                         width: 20%;
@@ -227,6 +230,7 @@ class Chromosome:
                     }
                     .course{
                         color: #543709;
+                        font-size: 16px;
                     }
                     tr hr{
                         color: #fefefe;

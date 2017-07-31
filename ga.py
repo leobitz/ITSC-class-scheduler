@@ -24,11 +24,11 @@ class GA:
             fitnesses.append(c.fitness())
         return np.array(fitnesses)
 
-    def mutate(self):
+    def mutate(self, rate):
         for c in self.chroms:
-            c.mutate()
+            c.mutate(rate)
     
-    def selection(self, iteration=1, group=4, parentToChildRatio=.5):
+    def selection(self, iteration=1, mutationRate=0.1, group=4, parentToChildRatio=.5):
         fitnesses = self.calcFitness()
         best = self.chroms[0]
         maxFitness = fitnesses[0]
@@ -64,7 +64,7 @@ class GA:
                 newChroms.append(child)
 
             self.chroms = newChroms
-            self.mutate()
+            self.mutate(mutationRate)
         import pylab as pl
         pl.scatter(range(len(x)), x)
         pl.show()
@@ -123,7 +123,7 @@ def main(argv):
 
     ga = GA(p, genes, rooms, days, classesInDay)
     c = 1 - c
-    best = ga.selection(i, group=g, parentToChildRatio=c)
+    best = ga.selection(iteration=i, mutationRate=m, group=g, parentToChildRatio=c)
     best.toRoomTimetableHtml()
     best.toStudentsTimetableHtml()
     best.toTeacherTimetableHtml()

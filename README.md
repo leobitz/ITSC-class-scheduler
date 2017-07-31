@@ -26,6 +26,8 @@ The script uses the classes.csv file from last semester course offer as an exexa
 
 The script uses a genetic algorithm by which it creates several candidates and based on their fitness to the current problem, it chooses the evolving parents and continue that process until a certain fitness is reached.
 
+Written in python, needs numpy
+
 ## Licence
 Licensed under the MIT License
 

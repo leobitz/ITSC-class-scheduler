@@ -10,6 +10,7 @@ genes, rooms = load()
 days = 5
 classesInDay = 4
 
+
 class GA:
     
     def __init__(self, popSize,genes, rooms, days, classesInDay):
